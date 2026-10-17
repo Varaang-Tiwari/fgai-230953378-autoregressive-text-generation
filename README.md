@@ -43,9 +43,9 @@ Run all cells in order. The notebook downloads the dataset from Project Gutenber
 | LSTM | 2,319,240 | 11 | 53.0 | 4.8644 | 129.59 | 20.04% | 42.27% |
 | **GRU** | 2,221,448 | 8 | 36.5 | **4.7365** | **114.03** | **21.14%** | **43.09%** |
 
-Plots: `results/training_curves.png`, `results/perplexity.png`, `results/train_time.png`, `results/temperature_analysis.png`.
+Plots: `training_curves.png`, `perplexity.png`, `train_time.png`, `temperature_analysis.png`.
 
-![Training curves](results/training_curves.png)
+![Training curves](training_curves.png)
 
 ## 6. Model comparison and evaluation
 
@@ -57,7 +57,7 @@ Plots: `results/training_curves.png`, `results/perplexity.png`, `results/train_t
 - **Overfitting:** with only ~95k training windows and ~2M parameters, training loss keeps falling while validation loss flattens after epochs 4-6 for SimpleRNN, BiRNN and GRU. Early stopping with best-weight restoration controls this.
 - Perplexities of 114-135 over a 5,000-word vocabulary are far better than uniform guessing (5,000) but high in absolute terms, which is expected for a small, narrative corpus where many next words are plausible.
 
-**Qualitative** (see `results/generated_samples.md`).
+**Qualitative** (see `generated_samples.md`).
 - **SimpleRNN / BiRNN:** produce locally grammatical clauses but drift quickly; BiRNN at low temperature collapses into "and the king was ... and the king was ..." loops.
 - **LSTM:** keeps character continuity well (e.g. "the soldier", "the king") and produces fairy-tale-style narrative, but is also loop-prone at low temperature.
 - **GRU:** the most fluent output and the most varied vocabulary at moderate temperature, with typical Grimm phrasing ("the king was forced...", "said the fish, 'you shall give us...'"). Long-range coherence is still limited for all models: sentences are plausible, but there is no real plot, as expected from a 20-word context window.
@@ -84,7 +84,7 @@ Seeds used: (1) "once upon a time there lived a king who had three sons", (2) "t
 | GRU | 1.0 | 0.839 | 1.000 | 0.000 |
 | GRU | 1.3 | 0.907 | 1.000 | 0.000 |
 
-![Temperature analysis](results/temperature_analysis.png)
+![Temperature analysis](temperature_analysis.png)
 
 - **T = 0.3 (conservative):** highest coherence at clause level, but the lowest diversity (Distinct-1 about 0.6) and the only setting with repeated trigrams (up to 7.1% for BiRNN). Output is generic and loops ("and I will be a good ... and I will").
 - **T = 0.7 (balanced):** repetition disappears (0 repeated trigrams for all models) while text stays mostly grammatical and story-like. This is the best trade-off.
@@ -101,7 +101,7 @@ Seeds used: (1) "once upon a time there lived a king who had three sons", (2) "t
 ```
 autoregressive_text_generation.ipynb   # executed notebook with outputs
 README.md
-results/
-  quantitative_results.csv, generation_metrics.csv, generated_samples.md
-  training_curves.png, perplexity.png, train_time.png, temperature_analysis.png
+quantitative_results.csv, generation_metrics.csv, generated_samples.md
+training_curves.png, perplexity.png, train_time.png, temperature_analysis.png
 ```
+(When the notebook is run, it writes these output files into a `results/` folder.)
